@@ -29,10 +29,8 @@ common ghc-options
 library
   import:          base, ghc-options
   hs-source-dirs:  src
-  exposed-modules:
-    Proto
-  build-depends:
-    , linear
+  exposed-modules: Proto
+  build-depends:   linear
 
 executable triream
   import:         base, ghc-options
