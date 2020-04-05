@@ -1,0 +1,5 @@
+resolver: lts-15.6
+packages:
+- .
+extra-deps:
+- iterm-show-0.1.0.1@sha256:02f8f120ca2fd705821970c3970f4ad9814f4b52ed23a384b384ee51642bcbf7,1259
