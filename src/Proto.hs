@@ -100,6 +100,25 @@ bary (Tri (P2 x1 y1) (P2 x2 y2) (P2 x3 y3)) (P2 x y) = Bary l1 l2 l3
     det :: a
     det = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3)
 
+-- | Lookat projection.
+lookAt
+  :: forall a.
+     P3 a   -- ^ Origin.
+  -> V3 a   -- ^ Up vector.
+  -> P3 a   -- ^ Camera position.
+  -> M44 a  -- ^ 4x4 transformation matrix.
+lookAt = undefined
+
+-- | Translation projection.
+translation :: forall a. Num a => V3 a -> M44 a
+translation (V3 tx ty tz) = V4 r1 r2 r3 r4
+  where
+    r1, r2, r3, r4 :: V4 a
+    r1 = V4 0 0 0 tx
+    r2 = V4 0 0 0 ty
+    r3 = V4 0 0 0 tz
+    r4 = V4 0 0 0 1
+
 -- | Perspective projection.
 perspective
   :: forall a. (Floating a)
