@@ -2,8 +2,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 module Proto where
 
-import           Linear        (V2 (V2), V3 (V3))
+import           Linear        (V2 (V2), V3 (V3), V4 (V4))
 import           Linear.Affine (Point (P))
+import           Linear.Matrix (M44)
 
 data Tri v a
   = Tri
@@ -98,3 +99,30 @@ bary (Tri (P2 x1 y1) (P2 x2 y2) (P2 x3 y3)) (P2 x y) = Bary l1 l2 l3
 
     det :: a
     det = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3)
+
+-- | Perspective projection.
+perspective
+  :: forall a. (Floating a)
+  => a      -- ^ Aspect ratio (width / height)
+  -> a      -- ^ Field of view (degrees)
+  -> a      -- ^ Near clipping plane
+  -> a      -- ^ Far clipping plane
+  -> M44 a  -- ^ 4x4 perspective transformation matrix
+perspective aspect fov near far = V4 r1 r2 r3 r4
+  where
+    r1, r2, r3, r4 :: V4 a
+    r1 = V4 a 0 0 0
+    r2 = V4 0 b 0 0
+    r3 = V4 0 0 c d
+    r4 = V4 0 0 (-1) 0
+
+    fovDeg, tfovDeg2, dz :: a
+    fovDeg = fov * 180 / pi
+    tfovDeg2 = tan (fovDeg / 2)
+    dz = far - near
+
+    a, b, c, d :: a
+    a = 1 / (aspect * tfovDeg2)
+    b = 1 / tfovDeg2
+    c = -(far + near) / dz
+    d = (2 * far * near) / dz
