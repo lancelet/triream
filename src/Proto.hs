@@ -117,9 +117,9 @@ perspective aspect fov near far = V4 r1 r2 r3 r4
     r4 = V4 0 0 (-1) 0
 
     fovDeg, tfovDeg2, dz :: a
-    fovDeg = fov * 180 / pi
+    fovDeg   = fov * 180 / pi
     tfovDeg2 = tan (fovDeg / 2)
-    dz = far - near
+    dz       = far - near
 
     a, b, c, d :: a
     a = 1 / (aspect * tfovDeg2)
